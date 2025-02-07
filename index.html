@@ -66,13 +66,33 @@
         function showQuestion() {
             if (currentQuestionIndex < selectedQuestions.length) {
                 document.getElementById('question').innerText = selectedQuestions[currentQuestionIndex];
-                document.getElementById('nextBtn').classList.add('hidden');
+                document.getElementById('nextBtn').classList.remove('hidden');
                 startTimer();
             } else {
                 document.getElementById('question').innerText = "질문이 끝났습니다!";
                 document.getElementById('nextBtn').classList.add('hidden');
                 document.getElementById('returnBtn').classList.remove('hidden');
             }
+        }
+
+        function nextQuestion() {
+            clearInterval(timer);
+            currentQuestionIndex++;
+            showQuestion();
+        }
+
+        function startTimer() {
+            let timeLeft = 120;
+            document.getElementById('timer').innerText = `남은 시간: ${timeLeft}초`;
+            timer = setInterval(() => {
+                timeLeft--;
+                document.getElementById('timer').innerText = `남은 시간: ${timeLeft}초`;
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    currentQuestionIndex++;
+                    showQuestion();
+                }
+            }, 1000);
         }
 
         function returnToMain() {
